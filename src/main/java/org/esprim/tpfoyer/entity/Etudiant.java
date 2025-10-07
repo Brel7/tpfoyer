@@ -1,14 +1,20 @@
 package org.esprim.tpfoyer.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-public class Etudiant {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class Etudiant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +23,11 @@ public class Etudiant {
     private String prenomEt;
     private long cin;
     private String ecole;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateNaissance;
+
+    @ManyToMany(mappedBy = "etudiants")
+    private List<Reservation> reservations;
 
 
 }
